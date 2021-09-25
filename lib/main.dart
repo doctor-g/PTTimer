@@ -41,8 +41,10 @@ class TimerWidget extends StatefulWidget {
 }
 
 class _TimerWidgetState extends State<TimerWidget> {
+  static const int _defaultSecondsRemaining = 60 * 3;
+
   bool _isRunning = false;
-  int _secondsRemaining = 60 * 3;
+  int _secondsRemaining = _defaultSecondsRemaining;
   Timer? _timer;
 
   @override
@@ -61,6 +63,10 @@ class _TimerWidgetState extends State<TimerWidget> {
         TextButton(
             child: const Text('Pause'),
             onPressed: _isRunning ? () => _pauseTimer() : null),
+        TextButton(
+          child: const Text('Reset'),
+          onPressed: () => _resetTimer(),
+        ),
       ],
     );
   }
@@ -87,6 +93,12 @@ class _TimerWidgetState extends State<TimerWidget> {
     } else {
       throw Exception('Cannot pause timer when there is no timer.');
     }
+  }
+
+  void _resetTimer() {
+    setState(() {
+      _secondsRemaining = _defaultSecondsRemaining;
+    });
   }
 }
 
