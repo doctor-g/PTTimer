@@ -90,7 +90,9 @@ class _TimerWidgetState extends State<TimerWidget> {
         children: [
           TextButton(
               child: const Text('Start'),
-              onPressed: _isRunning ? null : () => _startTimer()),
+              onPressed: !_isRunning && _secondsRemaining > 0
+                  ? () => _startTimer()
+                  : null),
           TextButton(
               child: const Text('Pause'),
               onPressed: _isRunning ? () => _pauseTimer() : null),
