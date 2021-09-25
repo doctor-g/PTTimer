@@ -59,7 +59,20 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    String text = '${_secondsRemaining~/60}:${(_secondsRemaining%60).toString().padLeft(2, '0')}';
+    return TimeRemaining(_secondsRemaining);
+  }
+
+}
+
+class TimeRemaining extends StatelessWidget {
+
+  final int seconds;
+
+  const TimeRemaining(this.seconds, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    String text = '${seconds~/60}:${(seconds%60).toString().padLeft(2, '0')}';
     return Text(text);
   }
 
