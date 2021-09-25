@@ -1,16 +1,10 @@
-# pt_timer
+# Promotion & Tenure Timer
 
-A new Flutter project.
+This [Flutter](http://flutter.dev/)-powered Web app provides three convenient timers. The default configuration is based on the
+needs of the [College of Sciences and Humanities](https://bsu.edu/csh) Promotion & Tenure Committee at [Ball State University](https://bsu.edu).
 
-## Getting Started
+This app is automatically built and hosted on GitHub Pages at
+[https://doctor-g.github.io/PTTimer](https://doctor-g.github.io/PTTimer).
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This software is &copy;2021 Paul Gestwicki and provided under the
+terms of [the GNU General Public License v3.0](LICENSE).
