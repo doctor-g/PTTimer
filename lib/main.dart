@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
@@ -43,13 +44,13 @@ class TimerWidget extends StatefulWidget {
 
 class _TimerWidgetState extends State<TimerWidget> {
 
-  int _secondsElapsed = 0;
+  int _secondsRemaining = 60*3;
 
   @override
   void initState() {
     Timer.periodic(const Duration(seconds:1), (timer) { 
       setState(() {
-        _secondsElapsed+=1;
+        _secondsRemaining = max(0, _secondsRemaining-1);
       });
     });
     super.initState();
@@ -58,7 +59,8 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(_secondsElapsed.toString());
+    String text = '${_secondsRemaining~/60}:${(_secondsRemaining%60).toString().padLeft(2, '0')}';
+    return Text(text);
   }
 
 }
