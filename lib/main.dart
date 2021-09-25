@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -157,7 +156,7 @@ class TimeRemaining extends StatelessWidget {
         '${seconds ~/ 60}:${(seconds % 60).toString().padLeft(2, '0')}';
     return Text(
       text,
-      style: TextStyle(fontSize: 48),
+      style: const TextStyle(fontSize: 48),
     );
   }
 }
