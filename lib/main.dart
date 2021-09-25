@@ -13,11 +13,18 @@ class PTTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'P&T Timer',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MainPage(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('P&T Timer'),
+        ),
+        body: const SizedBox.expand(
+          child: MainPage(),
+        ),
+      ),
     );
   }
 }
@@ -28,6 +35,8 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: const [
         TimerWidget(duration: Duration(minutes: 3)),
         TimerWidget(duration: Duration(minutes: 20)),
@@ -62,18 +71,23 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
         TimeRemaining(_secondsRemaining),
-        TextButton(
-            child: const Text('Start'),
-            onPressed: _isRunning ? null : () => _startTimer()),
-        TextButton(
-            child: const Text('Pause'),
-            onPressed: _isRunning ? () => _pauseTimer() : null),
-        TextButton(
-          child: const Text('Reset'),
-          onPressed: () => _resetTimer(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+                child: const Text('Start'),
+                onPressed: _isRunning ? null : () => _startTimer()),
+            TextButton(
+                child: const Text('Pause'),
+                onPressed: _isRunning ? () => _pauseTimer() : null),
+            TextButton(
+              child: const Text('Reset'),
+              onPressed: () => _resetTimer(),
+            ),
+          ],
         ),
       ],
     );
@@ -119,6 +133,9 @@ class TimeRemaining extends StatelessWidget {
   Widget build(BuildContext context) {
     String text =
         '${seconds ~/ 60}:${(seconds % 60).toString().padLeft(2, '0')}';
-    return Text(text);
+    return Text(
+      text,
+      style: TextStyle(fontSize: 48),
+    );
   }
 }
