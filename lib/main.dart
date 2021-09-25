@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -73,6 +74,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   bool _isRunning = false;
   late int _secondsRemaining;
   Timer? _timer;
+  final AudioCache _audioCache = AudioCache();
 
   @override
   void initState() {
@@ -111,7 +113,14 @@ class _TimerWidgetState extends State<TimerWidget> {
       _isRunning = true;
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         setState(() {
-          _secondsRemaining = max(0, _secondsRemaining - 1);
+          _secondsRemaining -= 1;
+          if (_secondsRemaining == 0) {
+            _audioCache.play('chime.wav');
+            if (_timer != null) {
+              _timer!.cancel();
+              _isRunning = false;
+            }
+          }
         });
       });
     });
