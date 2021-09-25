@@ -38,9 +38,18 @@ class MainPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: const [
-        TimerWidget(duration: Duration(minutes: 3)),
-        TimerWidget(duration: Duration(minutes: 20)),
-        TimerWidget(duration: Duration(minutes: 10)),
+        TimerWidget(
+          label: 'Opening Statement',
+          duration: Duration(minutes: 3),
+        ),
+        TimerWidget(
+          label: 'Discussion',
+          duration: Duration(minutes: 20),
+        ),
+        TimerWidget(
+          label: 'Extended discussion',
+          duration: Duration(minutes: 10),
+        ),
       ],
     );
   }
@@ -48,8 +57,10 @@ class MainPage extends StatelessWidget {
 
 class TimerWidget extends StatefulWidget {
   final Duration duration;
+  final String? label;
 
-  const TimerWidget({this.duration = const Duration(minutes: 3), Key? key})
+  const TimerWidget(
+      {this.duration = const Duration(minutes: 3), this.label, Key? key})
       : super(key: key);
 
   @override
@@ -71,26 +82,28 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TimeRemaining(_secondsRemaining),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-                child: const Text('Start'),
-                onPressed: _isRunning ? null : () => _startTimer()),
-            TextButton(
-                child: const Text('Pause'),
-                onPressed: _isRunning ? () => _pauseTimer() : null),
-            TextButton(
-              child: const Text('Reset'),
-              onPressed: () => _resetTimer(),
-            ),
-          ],
-        ),
-      ],
-    );
+    var columnChildren = [
+      TimeRemaining(_secondsRemaining),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextButton(
+              child: const Text('Start'),
+              onPressed: _isRunning ? null : () => _startTimer()),
+          TextButton(
+              child: const Text('Pause'),
+              onPressed: _isRunning ? () => _pauseTimer() : null),
+          TextButton(
+            child: const Text('Reset'),
+            onPressed: () => _resetTimer(),
+          ),
+        ],
+      ),
+    ];
+    if (widget.label != null) {
+      columnChildren.insert(0, Text(widget.label!));
+    }
+    return Column(children: columnChildren);
   }
 
   void _startTimer() {
