@@ -43,6 +43,7 @@ class TimerWidget extends StatefulWidget {
 class _TimerWidgetState extends State<TimerWidget> {
   bool _isRunning = false;
   int _secondsRemaining = 60 * 3;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -57,6 +58,9 @@ class _TimerWidgetState extends State<TimerWidget> {
         TextButton(
             child: const Text('Start'),
             onPressed: _isRunning ? null : () => _startTimer()),
+        TextButton(
+            child: const Text('Pause'),
+            onPressed: _isRunning ? () => _pauseTimer() : null),
       ],
     );
   }
@@ -64,12 +68,25 @@ class _TimerWidgetState extends State<TimerWidget> {
   void _startTimer() {
     setState(() {
       _isRunning = true;
-    });
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        _secondsRemaining = max(0, _secondsRemaining - 1);
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        setState(() {
+          _secondsRemaining = max(0, _secondsRemaining - 1);
+        });
       });
     });
+  }
+
+  void _pauseTimer() {
+    if (_timer != null) {
+      // This actually cancels the timer, but that's ok, because when
+      // we start, it will make a new one.
+      setState(() {
+        _timer!.cancel();
+        _isRunning = false;
+      });
+    } else {
+      throw Exception('Cannot pause timer when there is no timer.');
+    }
   }
 }
 
