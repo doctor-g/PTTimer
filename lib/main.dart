@@ -22,7 +22,6 @@ class PTTimer extends StatelessWidget {
   }
 }
 
-
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -33,47 +32,56 @@ class MainPage extends StatelessWidget {
 }
 
 class TimerWidget extends StatefulWidget {
-  const TimerWidget({Key? key}) : super(key:key);
+  const TimerWidget({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
     return _TimerWidgetState();
   }
-  
 }
 
 class _TimerWidgetState extends State<TimerWidget> {
-
-  int _secondsRemaining = 60*3;
+  bool _isRunning = false;
+  int _secondsRemaining = 60 * 3;
 
   @override
   void initState() {
-    Timer.periodic(const Duration(seconds:1), (timer) { 
-      setState(() {
-        _secondsRemaining = max(0, _secondsRemaining-1);
-      });
-    });
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return TimeRemaining(_secondsRemaining);
+    return Row(
+      children: [
+        TimeRemaining(_secondsRemaining),
+        TextButton(
+            child: const Text('Start'),
+            onPressed: _isRunning ? null : () => _startTimer()),
+      ],
+    );
   }
 
+  void _startTimer() {
+    setState(() {
+      _isRunning = true;
+    });
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _secondsRemaining = max(0, _secondsRemaining - 1);
+      });
+    });
+  }
 }
 
 class TimeRemaining extends StatelessWidget {
-
   final int seconds;
 
   const TimeRemaining(this.seconds, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String text = '${seconds~/60}:${(seconds%60).toString().padLeft(2, '0')}';
+    String text =
+        '${seconds ~/ 60}:${(seconds % 60).toString().padLeft(2, '0')}';
     return Text(text);
   }
-
 }
