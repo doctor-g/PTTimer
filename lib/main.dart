@@ -2,28 +2,55 @@ import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
 
 void main() {
-  runApp(const PTTimer());
+  runApp(
+    MaterialApp(
+      title: 'P&T Timer',
+      home: const PTTimer(),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+    ),
+  );
 }
 
 class PTTimer extends StatelessWidget {
+  static const String _githubURL = 'https://github.com/doctor-g/PTTimer';
+
   const PTTimer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'P&T Timer',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('P&T Timer'),
+        actions: [
+          IconButton(
+              onPressed: () => showAboutDialog(
+                    context: context,
+                    applicationName: 'P&T Timer',
+                    children: [
+                      const Text('©2021 Paul Gestwicki'),
+                      const Text(
+                          'Licensed under GNU General Public License v3.0'),
+                      Link(
+                        uri: Uri.parse(_githubURL),
+                        builder: (context, followLink) => InkWell(
+                            child: const Text(
+                              _githubURL,
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                            onTap: followLink),
+                      ),
+                    ],
+                  ),
+              icon: const Icon(Icons.info)),
+        ],
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('P&T Timer'),
-        ),
-        body: const SizedBox.expand(
-          child: MainPage(),
-        ),
+      body: const SizedBox.expand(
+        child: MainPage(),
       ),
     );
   }
