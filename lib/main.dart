@@ -27,12 +27,21 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const TimerWidget();
+    return Column(
+      children: const [
+        TimerWidget(duration: Duration(minutes: 3)),
+        TimerWidget(duration: Duration(minutes: 20)),
+        TimerWidget(duration: Duration(minutes: 10)),
+      ],
+    );
   }
 }
 
 class TimerWidget extends StatefulWidget {
-  const TimerWidget({Key? key}) : super(key: key);
+  final Duration duration;
+
+  const TimerWidget({this.duration = const Duration(minutes: 3), Key? key})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -41,14 +50,13 @@ class TimerWidget extends StatefulWidget {
 }
 
 class _TimerWidgetState extends State<TimerWidget> {
-  static const int _defaultSecondsRemaining = 60 * 3;
-
   bool _isRunning = false;
-  int _secondsRemaining = _defaultSecondsRemaining;
+  late int _secondsRemaining;
   Timer? _timer;
 
   @override
   void initState() {
+    _secondsRemaining = widget.duration.inSeconds;
     super.initState();
   }
 
@@ -97,7 +105,7 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   void _resetTimer() {
     setState(() {
-      _secondsRemaining = _defaultSecondsRemaining;
+      _secondsRemaining = widget.duration.inSeconds;
     });
   }
 }
