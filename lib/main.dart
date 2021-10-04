@@ -74,8 +74,12 @@ class MainPage extends StatelessWidget {
           duration: Duration(minutes: 20),
         ),
         TimerWidget(
-          label: 'Extended discussion',
+          label: 'Extended Discussion',
           duration: Duration(minutes: 10),
+        ),
+        TimerWidget(
+          label: 'Closing Statement',
+          duration: Duration(minutes: 2),
         ),
       ],
     );
