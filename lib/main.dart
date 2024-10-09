@@ -38,11 +38,12 @@ class PTTimer extends StatelessWidget {
                       Link(
                         uri: Uri.parse(_githubURL),
                         builder: (context, followLink) => InkWell(
-                            child: const Text(
-                              _githubURL,
-                              style: TextStyle(color: Colors.blue),
-                            ),
-                            onTap: followLink),
+                          onTap: followLink,
+                          child: const Text(
+                            _githubURL,
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -104,7 +105,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   bool _isRunning = false;
   late int _secondsRemaining;
   Timer? _timer;
-  final AudioCache _audioCache = AudioCache();
+  final _player = AudioPlayer();
 
   @override
   void initState() {
@@ -120,13 +121,13 @@ class _TimerWidgetState extends State<TimerWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextButton(
-              child: const Text('Start'),
               onPressed: !_isRunning && _secondsRemaining > 0
                   ? () => _startTimer()
-                  : null),
+                  : null,
+              child: const Text('Start')),
           TextButton(
-              child: const Text('Pause'),
-              onPressed: _isRunning ? () => _pauseTimer() : null),
+              onPressed: _isRunning ? () => _pauseTimer() : null,
+              child: const Text('Pause')),
           TextButton(
             child: const Text('Reset'),
             onPressed: () => _resetTimer(),
@@ -159,7 +160,7 @@ class _TimerWidgetState extends State<TimerWidget> {
         setState(() {
           _secondsRemaining -= 1;
           if (_secondsRemaining == 0) {
-            _audioCache.play('chime.wav');
+            _player.play(AssetSource('chime.wav'));
             if (_timer != null) {
               _timer!.cancel();
               _isRunning = false;
