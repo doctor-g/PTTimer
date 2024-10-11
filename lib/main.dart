@@ -32,7 +32,7 @@ class PTTimer extends StatelessWidget {
                     context: context,
                     applicationName: 'P&T Timer',
                     children: [
-                      const Text('©2021 Paul Gestwicki'),
+                      Text('©2021–${DateTime.now().year} Paul Gestwicki'),
                       const Text(
                           'Licensed under GNU General Public License v3.0'),
                       Link(
